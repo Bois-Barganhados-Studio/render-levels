@@ -1,25 +1,34 @@
 using UnityEngine;
+using System.Collections;
 
 public class Game : MonoBehaviour
 {
-    //public string tileMap1PrefabPath = "Sprites/TileTest";
-    //public string tileMap2PrefabPath = "Sprites/TileTest2";
-    public string isometric = "Maps/Isometric";
+    private const string _FOLDER = "Maps";
+    public string ground = _FOLDER+"/Ground";
+    public string groundCorner = _FOLDER+"/Ground_Corner";
+    public Vector3 gPosition = new(0, 0, 0); //float numbers
+    public Vector3 gcPosition = new(0.32f, 0 , 0);
+    public ArrayList list = new ();
 
     void Start()
     {
-        //Debug.Log(Resources.Load(tileMap1PrefabPath));
-        // GameObject tileMap1Prefab = (GameObject)Resources.Load(tileMap1PrefabPath);
-        // GameObject tileMap2Prefab = (GameObject)Resources.Load(tileMap2PrefabPath);
-        //  Debug.Log(tileMap1Prefab);
+        Debug.Log("Running");
+        Debug.Log(ground);
+        Debug.Log(groundCorner);
 
-        GameObject isometricObj = (GameObject)Resources.Load(isometric);
+        GameObject groundObj = (GameObject)Resources.Load(ground);
+        GameObject groundCornerObj = (GameObject)Resources.Load(groundCorner);
 
-        GameObject newTileMap1 = Instantiate(isometricObj, transform.position, Quaternion.identity);
-        newTileMap1.transform.parent = transform;
+        list.Add(GenGameTileMap(groundObj,gPosition));
+        list.Add(GenGameTileMap(groundCornerObj, gcPosition));
 
-        //GameObject newTileMap2 = Instantiate(tileMap2Prefab, transform.position, Quaternion.identity);
-       // newTileMap2.transform.parent = transform;
+    }
 
+
+    GameObject GenGameTileMap(GameObject obj,Vector3 pos)
+    {
+        GameObject tilemap = Instantiate(obj, pos, Quaternion.identity);
+        tilemap.transform.parent = transform;
+        return tilemap;
     }
 }
